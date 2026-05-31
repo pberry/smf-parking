@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - License is now 0BSD (was unstated/MIT-in-metadata-only); added `LICENSE` file.
 - Plots now render timestamps in Pacific (`America/Los_Angeles`) instead of UTC.
   Storage stays in UTC; only display changed. Handles PST/PDT automatically.
+- README launchd instructions now use `<your-username>` as a placeholder
+  instead of hardcoding the author's username.
 
 ## [1.0.0] - 2026-05-30
 

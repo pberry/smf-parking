@@ -47,18 +47,21 @@ Both commands accept `--db PATH`; `smf-plot` also accepts `--out DIR` and
 
 ## Scheduling (macOS, launchd)
 
-Edit `launchd/com.pberry.smf-parking.plist` to point at the absolute paths of
-your venv's `python` and this project, then:
+The repo ships with `launchd/com.pberry.smf-parking.plist` (`pberry` is my
+username — replace `pberry` with `<your-username>` everywhere below, and
+both rename the file and edit the `<key>Label</key>` value inside it to
+match). Also update the absolute paths inside the plist to point at your
+venv's `python` and project directory.
 
 ```sh
-launchctl bootstrap gui/$UID launchd/com.pberry.smf-parking.plist
-launchctl print gui/$UID/com.pberry.smf-parking   # verify
+launchctl bootstrap gui/$UID launchd/com.<your-username>.smf-parking.plist
+launchctl print gui/$UID/com.<your-username>.smf-parking   # verify
 ```
 
 To remove:
 
 ```sh
-launchctl bootout gui/$UID/com.pberry.smf-parking
+launchctl bootout gui/$UID/com.<your-username>.smf-parking
 ```
 
 Logs land in `data/launchd.log`.
@@ -73,7 +76,7 @@ Tests run offline against a captured HTML fixture in `tests/fixtures/`.
 
 ## If it stops working
 
-**Check first:** `launchctl print gui/$UID/com.pberry.smf-parking | grep -E 'last exit code|runs ='`
+**Check first:** `launchctl print gui/$UID/com.<your-username>.smf-parking | grep -E 'last exit code|runs ='`
 and tail `data/launchd.log` — the failure mode is almost always one of these:
 
 - **Venv interpreter is gone** (e.g. you ran `brew uninstall python@3.14`, or
