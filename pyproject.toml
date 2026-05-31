@@ -9,7 +9,7 @@ description = "Hourly poller and plotter for Sacramento International Airport (S
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [{ name = "Pat Berry", email = "pberry@gmail.com" }]
-license = { text = "MIT" }
+license = { text = "0BSD" }
 dependencies = [
     "playwright>=1.40",
     "pandas>=2.0",
