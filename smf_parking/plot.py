@@ -5,6 +5,7 @@ import sqlite3
 import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import matplotlib
 import matplotlib.dates as mdates
@@ -15,6 +16,8 @@ matplotlib.use("Agg")
 
 DEFAULT_DB = Path("data/parking.db")
 DEFAULT_OUT = Path("plots")
+# Data is stored in UTC; plots render in Pacific (handles PST/PDT automatically).
+DISPLAY_TZ = ZoneInfo("America/Los_Angeles")
 
 
 def _load(db_path: Path, days: int) -> pd.DataFrame:
@@ -34,7 +37,7 @@ def _load(db_path: Path, days: int) -> pd.DataFrame:
         )
     if df.empty:
         return df
-    df["ts"] = pd.to_datetime(df["ts"], utc=True)
+    df["ts"] = pd.to_datetime(df["ts"], utc=True).dt.tz_convert(DISPLAY_TZ)
     # NaN-out closed/unknown rows so matplotlib draws gaps automatically.
     df.loc[df["status"] != "open", "open_spaces"] = pd.NA
     df["open_spaces"] = df["open_spaces"].astype("Float64")
@@ -44,13 +47,13 @@ def _load(db_path: Path, days: int) -> pd.DataFrame:
 def _format_time_axis(ax: plt.Axes, days: int) -> None:
     if days <= 2:
         loc = mdates.HourLocator(interval=3)
-        fmt = mdates.DateFormatter("%m-%d %H:%M", tz=UTC)
+        fmt = mdates.DateFormatter("%m-%d %H:%M", tz=DISPLAY_TZ)
     elif days <= 14:
         loc = mdates.DayLocator()
-        fmt = mdates.DateFormatter("%m-%d", tz=UTC)
+        fmt = mdates.DateFormatter("%m-%d", tz=DISPLAY_TZ)
     else:
         loc = mdates.AutoDateLocator()
-        fmt = mdates.ConciseDateFormatter(loc, tz=UTC)
+        fmt = mdates.ConciseDateFormatter(loc, tz=DISPLAY_TZ)
     ax.xaxis.set_major_locator(loc)
     ax.xaxis.set_major_formatter(fmt)
     for label in ax.get_xticklabels():
@@ -67,7 +70,7 @@ def _plot_one(df: pd.DataFrame, lot_id: str, out_path: Path, days: int) -> None:
     ax.plot(sub["ts"], sub["open_spaces"], marker=".", linewidth=1)
     ax.set_title(f"{name} — open spaces (last {days} days)")
     ax.set_ylabel("Open spaces")
-    ax.set_xlabel("Time (UTC)")
+    ax.set_xlabel("Time (Pacific)")
     ax.grid(True, alpha=0.3)
     _format_time_axis(ax, days)
     fig.tight_layout()
@@ -82,7 +85,7 @@ def _plot_all(df: pd.DataFrame, out_path: Path, days: int) -> None:
         ax.plot(sub["ts"], sub["open_spaces"], marker=".", linewidth=1, label=name)
     ax.set_title(f"SMF parking — open spaces by lot (last {days} days)")
     ax.set_ylabel("Open spaces")
-    ax.set_xlabel("Time (UTC)")
+    ax.set_xlabel("Time (Pacific)")
     ax.grid(True, alpha=0.3)
     ax.legend(loc="best", fontsize="small")
     _format_time_axis(ax, days)
