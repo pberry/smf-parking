@@ -70,3 +70,37 @@ pytest
 ```
 
 Tests run offline against a captured HTML fixture in `tests/fixtures/`.
+
+## If it stops working
+
+**Check first:** `launchctl print gui/$UID/com.pberry.smf-parking | grep -E 'last exit code|runs ='`
+and tail `data/launchd.log` — the failure mode is almost always one of these:
+
+- **Venv interpreter is gone** (e.g. you ran `brew uninstall python@3.14`, or
+  Homebrew dropped a formula). Symptom: `posix_spawn` error in the log, or
+  `bad interpreter: No such file or directory`. Fix by rebuilding the venv:
+
+  ```sh
+  rm -rf .venv
+  python3 -m venv .venv
+  .venv/bin/pip install -e '.[dev]'
+  .venv/bin/playwright install chromium
+  ```
+
+  No code changes needed — `pyproject.toml` accepts any Python `>=3.12`.
+
+- **SMF page changed structure** (e.g. lots widget renamed, new framework).
+  Symptom: `ScrapeError: lots widget not found` in the log. Refresh the test
+  fixture and the parser will tell you what broke:
+
+  ```sh
+  .venv/bin/python scripts/capture_fixture.py
+  pytest
+  ```
+
+- **Playwright Chromium upgraded out from under us.** Symptom: browser-launch
+  error. Re-run `.venv/bin/playwright install chromium`.
+
+- **Network blip / SMF site down.** Symptom: timeout in the log. Single
+  failures are harmless — the next hourly run picks up where it left off.
+  Persistent failures mean the URL or the site is genuinely broken.
