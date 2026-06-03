@@ -31,6 +31,8 @@ def test_open_readings_have_integer_spaces(fixture_html: str) -> None:
         if r.status == "open":
             assert isinstance(r.open_spaces, int)
             assert r.open_spaces >= 0
+        elif r.status == "closed":
+            assert r.open_spaces == 0
         else:
             assert r.open_spaces is None
 
@@ -39,7 +41,7 @@ def test_closed_lot_is_marked_closed(fixture_html: str) -> None:
     readings = {r.lot_name: r for r in parse(fixture_html)}
     west = readings["West Economy Lot"]
     assert west.status == "closed"
-    assert west.open_spaces is None
+    assert west.open_spaces == 0
     assert west.raw.lower() == "closed"
 
 

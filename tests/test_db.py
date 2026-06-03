@@ -19,7 +19,7 @@ def _sample() -> list[LotReading]:
     return [
         LotReading("garage", "Garage", 382, "open", "382"),
         LotReading("daily-a", "Daily A", 144, "open", "144"),
-        LotReading("west-economy-lot", "West Economy Lot", None, "closed", "Closed"),
+        LotReading("west-economy-lot", "West Economy Lot", 0, "closed", "Closed"),
     ]
 
 
@@ -32,7 +32,7 @@ def test_insert_round_trip(conn: sqlite3.Connection) -> None:
     assert rows == [
         ("daily-a", "Daily A", 144, "open", "144"),
         ("garage", "Garage", 382, "open", "382"),
-        ("west-economy-lot", "West Economy Lot", None, "closed", "Closed"),
+        ("west-economy-lot", "West Economy Lot", 0, "closed", "Closed"),
     ]
 
 
@@ -59,6 +59,6 @@ def test_reopening_lot_records_new_status(conn: sqlite3.Connection) -> None:
         "WHERE lot_id = 'west-economy-lot' ORDER BY ts"
     ).fetchall()
     assert history == [
-        ("2026-05-30T17:00:00Z", "closed", None),
+        ("2026-05-30T17:00:00Z", "closed", 0),
         ("2026-05-30T18:00:00Z", "open", 2100),
     ]

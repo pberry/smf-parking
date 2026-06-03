@@ -60,7 +60,7 @@ def _normalize(raw: str) -> tuple[Status, int | None]:
     if raw.isdigit():
         return "open", int(raw)
     if raw.lower() == "closed":
-        return "closed", None
+        return "closed", 0
     return "unknown", None
 
 

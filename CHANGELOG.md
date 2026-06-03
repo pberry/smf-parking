@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Storage stays in UTC; only display changed. Handles PST/PDT automatically.
 - README launchd instructions now use `<your-username>` as a placeholder
   instead of hardcoding the author's username.
+- Closed lots are now stored as `open_spaces = 0` instead of `NULL`. Status
+  column still distinguishes `closed` from `open`, so the two cases remain
+  separable; only the numeric column changed. Plots still draw gaps for
+  closed/unknown rows.
 
 ## [1.0.0] - 2026-05-30
 
