@@ -15,8 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   instead of hardcoding the author's username.
 - Closed lots are now stored as `open_spaces = 0` instead of `NULL`. Status
   column still distinguishes `closed` from `open`, so the two cases remain
-  separable; only the numeric column changed. Plots still draw gaps for
-  closed/unknown rows.
+  separable; only the numeric column changed.
+- `smf-plot` now draws closed periods as a dip to 0 instead of a gap, matching
+  the new storage contract. Unknown-status rows (NULL `open_spaces`) still
+  render as gaps.
 
 ## [1.0.0] - 2026-05-30
 

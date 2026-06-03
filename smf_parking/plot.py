@@ -38,8 +38,8 @@ def _load(db_path: Path, days: int) -> pd.DataFrame:
     if df.empty:
         return df
     df["ts"] = pd.to_datetime(df["ts"], utc=True).dt.tz_convert(DISPLAY_TZ)
-    # NaN-out closed/unknown rows so matplotlib draws gaps automatically.
-    df.loc[df["status"] != "open", "open_spaces"] = pd.NA
+    # Closed lots store as 0 (a real dip); unknown rows have NULL open_spaces
+    # already, so they surface as NA and matplotlib draws them as gaps.
     df["open_spaces"] = df["open_spaces"].astype("Float64")
     return df
 
