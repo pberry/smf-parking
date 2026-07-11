@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `smf-plot` now also renders `daily-*.png` rolling 4-week hourly-average
+  plots alongside the existing hourly-trend plots: one point per hour of
+  day, averaged across the trailing 4 weeks, split into separate
+  weekday/weekend lines with a shaded ±1 std-dev band. `daily-all-lots.png`
+  compares all lots' weekday/weekend curves side by side.
+
 ### Changed
 - License is now 0BSD (was unstated/MIT-in-metadata-only); added `LICENSE` file.
 - Plots now render timestamps in Pacific (`America/Los_Angeles`) instead of UTC.

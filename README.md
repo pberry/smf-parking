@@ -45,6 +45,15 @@ smf-plot
 Both commands accept `--db PATH`; `smf-plot` also accepts `--out DIR` and
 `--days N`.
 
+`smf-plot` writes two kinds of PNGs per lot (plus a combined view):
+
+- `<lot_id>.png` / `all-lots.png` — every hourly reading over the last
+  `--days` days, for spotting trends and outages.
+- `daily-<lot_id>.png` / `daily-all-lots.png` — a rolling 4-week average for
+  each hour of day, split into weekday/weekend lines, for spotting the
+  "typical day" shape. Always uses a trailing 4-week window, independent of
+  `--days`.
+
 ## Scheduling (macOS, launchd)
 
 The repo ships with `launchd/com.pberry.smf-parking.plist` (`pberry` is my
