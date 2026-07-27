@@ -54,6 +54,24 @@ Both commands accept `--db PATH`; `smf-plot` also accepts `--out DIR` and
   "typical day" shape. Always uses a trailing 4-week window, independent of
   `--days`.
 
+## Estimating future availability
+
+`smf-estimate` gives a probabilistic read on a lot's availability at a future
+date/time, e.g. planning a trip:
+
+```sh
+smf-estimate --lot garage --at "2026-07-30 16:00"
+```
+
+It finds every historical reading that shares the target's weekday name
+(e.g. "Thursday") and falls within `--window-minutes` (default 30) of its
+time-of-day, then reports the empirical distribution (median, observed
+range, 10th-90th percentile band) of that lot's `open_spaces` across those
+matches. Pass `--at` multiple times to see a trend across a visit window
+(e.g. arrival through departure). It's a historical analog, not a forecast —
+accuracy depends entirely on how much matching history exists (`n` in the
+output), which is small until the database has accumulated many weeks.
+
 ## Scheduling (macOS, launchd)
 
 The repo ships with `launchd/com.pberry.smf-parking.plist` (`pberry` is my

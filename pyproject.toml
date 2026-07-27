@@ -22,6 +22,7 @@ dev = ["pytest>=8.0"]
 [project.scripts]
 smf-poll = "smf_parking.poll:main"
 smf-plot = "smf_parking.plot:main"
+smf-estimate = "smf_parking.estimate:main"
 
 [tool.setuptools.packages.find]
 include = ["smf_parking*"]

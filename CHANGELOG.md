@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `smf-estimate` CLI: given a lot and a future date/time, reports the
+  empirical distribution (median, range, 10th-90th percentile) of
+  `open_spaces` from historical readings on the same weekday and
+  time-of-day. Accepts repeated `--at` for a multi-point trend view.
 - `smf-plot` now also renders `daily-*.png` rolling 4-week hourly-average
   plots alongside the existing hourly-trend plots: one point per hour of
   day, averaged across the trailing 4 weeks, split into separate
