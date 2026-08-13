@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The "Garage" lot was renamed "Garage 1" on the source website (ahead of
+  Garage 2 opening Fall 2026). `smf-estimate --lot` default updated to
+  `garage-1`, and historical `readings` rows were migrated in place
+  (`lot_id`/`lot_name` `garage`/`Garage` -> `garage-1`/`Garage 1`) so the
+  trend history stays continuous instead of splitting into two lots.
+
 ### Added
 - `smf-estimate` CLI: given a lot and a future date/time, reports the
   empirical distribution (median, range, 10th-90th percentile) of

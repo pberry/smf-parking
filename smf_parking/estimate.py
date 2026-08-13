@@ -142,7 +142,7 @@ def main(argv: list[str] | None = None) -> int:
         )
     )
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
-    parser.add_argument("--lot", default="garage", help="lot_id (default: garage)")
+    parser.add_argument("--lot", default="garage-1", help="lot_id (default: garage-1)")
     parser.add_argument(
         "--at",
         required=True,

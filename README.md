@@ -13,7 +13,7 @@ the page exposes:
 
 | `lot_id`            | Display name (from the widget) |
 | ------------------- | ------------------------------ |
-| `garage`            | Garage                         |
+| `garage-1`          | Garage 1                       |
 | `daily-a`           | Daily A                        |
 | `east-economy-lot`  | East Economy Lot               |
 | `south-economy-lot` | South Economy Lot              |
@@ -60,7 +60,7 @@ Both commands accept `--db PATH`; `smf-plot` also accepts `--out DIR` and
 date/time, e.g. planning a trip:
 
 ```sh
-smf-estimate --lot garage --at "2026-07-30 16:00"
+smf-estimate --lot garage-1 --at "2026-07-30 16:00"
 ```
 
 It finds every historical reading that shares the target's weekday name
